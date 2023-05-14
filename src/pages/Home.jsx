@@ -13,6 +13,8 @@ function Home() {
             <Link to='/blanko'>Blanko</Link>
             <br></br>
             <Link to='/slido'>Slido</Link>
+            <br></br>
+            <Link to='/tetro'>Tetro</Link>
         </>
     );
 }

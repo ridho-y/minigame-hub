@@ -16,7 +16,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/blanko" element={<Blanko />} />
         <Route path="/slido" element={<Slido />} />
-        {/* <Route path="/tetro" element={<Tetro />} /> */}
+        <Route path="/tetro" element={<Tetro />} />
         {/* <Route path='/crossword' element={<Todo/>} /> */}
         {/* <Route path='/sudoku' element={<StarRating/>} /> */}
         <Route path="*" element={<Page404 />}></Route>
