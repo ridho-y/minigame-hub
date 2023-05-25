@@ -32,8 +32,8 @@ function Game2048 () {
         <div id='game'>
             <div id='board'>
                 {board.map(r => {
-                    return r.map(c => {
-                        return <Cell val={c}/>
+                    return r.map((c,i) => {
+                        return <Cell key={i} val={c}/>
                     })
                 })}
             </div>
@@ -44,27 +44,27 @@ function Game2048 () {
 function Cell(props) {
 
     let cellClassName = 'cell';
-    if (props.val == '0') {
+    if (props.val === '0') {
         cellClassName += ' invisible'
-    } else if (props.val == '2') {
+    } else if (props.val === '2') {
         cellClassName += ' num-2';
-    } else if (props.val == '4') {
+    } else if (props.val === '4') {
         cellClassName += ' num-4';
-    } else if (props.val == '8') {
+    } else if (props.val === '8') {
         cellClassName += ' num-8';
-    } else if (props.val == '16') {
+    } else if (props.val === '16') {
         cellClassName += ' num-16';
-    } else if (props.val == '32') {
+    } else if (props.val === '32') {
         cellClassName += ' num-32';
-    } else if (props.val == '64') {
+    } else if (props.val === '64') {
         cellClassName += ' num-64';
-    } else if (props.val == '128') {
+    } else if (props.val === '128') {
         cellClassName += ' num-128';
-    } else if (props.val == '512') {
+    } else if (props.val === '512') {
         cellClassName += ' num-512';
-    } else if (props.val == '1024') {
+    } else if (props.val === '1024') {
         cellClassName += ' num-1024';
-    } else if (props.val == '2048') {
+    } else if (props.val === '2048') {
         cellClassName += ' num-2048';
     }
 

@@ -42,7 +42,7 @@ function Blanko() {
                 setReset(reset => !reset)
             }, 100)
         }
-    }, [currWord])
+    }, [currWord, word])
 
     // ** Starting game and reset functionality **
     // The purpose of this useEffect and useState is to allow the reset

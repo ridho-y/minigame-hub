@@ -89,7 +89,7 @@ function Tile(props) {
     }
 
 
-    let img = <img className='tile-img' src={props.img} />
+    let img = <img className='tile-img' src={props.img} alt={'piece of puzzle'}/>
     if (props.img === null) {
         img = <></>
     }
