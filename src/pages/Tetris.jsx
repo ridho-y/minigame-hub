@@ -7,6 +7,8 @@ import DownArrow from '../assets/down-arrow.svg'
 import LeftArrow from '../assets/left-arrow.svg'
 import RightArrow from '../assets/right-arrow.svg'
 import '../styles/Tetris.css'
+import Sound from 'react-sound';
+import TetrisSoundTrack from '../assets/tetris-soundtrack.mp3';
 
 function Tetris () {
 
@@ -548,6 +550,7 @@ function Tetris () {
     if (isMobile) {
         return (
             <GridContainer className='tetris-background'>
+                
                 <div className='tetris-game'>
                     <div className='tetris-section'>
                         <TetrisGrid score={score} grid={grid} colourGrid={colourGrid} gameActive={gameActive} initGame={initGame} stopGame={stopGame} rotateActiveChunks={rotateActiveChunks} moveActiveChunksLeft={moveActiveChunksLeft} moveActiveChunksDown={moveActiveChunksDown} moveActiveChunksRight={moveActiveChunksRight}/>
@@ -559,6 +562,12 @@ function Tetris () {
                         <TetrisInstructions />
                     </div>
                 </div>
+                <Sound
+                    url={TetrisSoundTrack}
+                    playStatus={Sound.status.PLAYING}
+                    loop
+                    volume={5}
+                />
             </GridContainer>
         )
     } else {
@@ -575,6 +584,12 @@ function Tetris () {
                         <TetrisHighestScore />
                     </div>
                 </div>
+                <Sound
+                    url={TetrisSoundTrack}
+                    playStatus={Sound.status.PLAYING}
+                    loop
+                    volume={5}
+                />
             </GridContainer>
         );
     }
