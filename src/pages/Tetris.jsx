@@ -6,21 +6,18 @@ import UpArrow from '../assets/up-arrow.svg'
 import DownArrow from '../assets/down-arrow.svg'
 import LeftArrow from '../assets/left-arrow.svg'
 import RightArrow from '../assets/right-arrow.svg'
+import '../styles/Tetris.css'
 
 function Tetris () {
-
 
     if (localStorage.getItem('playoz-tetris-highest-score') === undefined) {
         localStorage.setItem('playoz-tetris-highest-score', '0')
     }
 
-    // list of chunks and each chunk has list of blocks, each block stores its x and y val
     const [chunks, setChunks] = useState([])
     const [gameActive, setGameActive] = useState(false)
     const [score, setScore] = useState(0)
-    // chunks = [[{x: 1, y: 2, active: true, centre: false}, {x: 1, y: 3, active: true, centre: false}]]
 
-    // upon changing of chunks set the grid
     const height = 20;
     const width = 10;
     let initGrid = []
@@ -37,9 +34,6 @@ function Tetris () {
     const [colourGrid, setColourGrid] = useState(initColourGrid);
 
     const canMoveChunkRight = (chunk) => {
-        // Checks the grid if it can move further down
-        // chunk = [{x: 0, y: 0, active: true}]
-
         // Get righest of blocks
         let righestBlocks = {}
         for (let i = 0; i < chunk.length; i++) {
@@ -54,34 +48,22 @@ function Tetris () {
         }
         righestBlocks = Object.values(righestBlocks)
 
-        // console.log(JSON.stringify(righestBlocks));
-
         for (let i = 0; i < righestBlocks.length; i++) {
             let block = righestBlocks[i]
-            if (block.x < width - 1) {
-                // console.log(`GRID; ${JSON.stringify(grid)}`)
-                // console.log(`At pos; ${block.y} ${block.x}`)
-                // console.log(`Checking pos; ${block.y} ${block.x + 1}, == ${grid[block.y][block.x + 1]}`)
-            }
             
             if (block.x >= width - 1 || grid[block.y][block.x + 1] === true || !block.active) {
                 return false
             }
         }
 
-        // console.log('Can move')
         return true
     }
 
-
-
-    // // Allow movement of active chunks
     const moveActiveChunksRight = () => {
         setChunks(chunks => {
             let newChunks = [];
             for (let i = 0; i < chunks.length; i++) {
                 let currChunk = [];
-                // console.log(JSON.stringify(grid));
                 if (canMoveChunkRight(chunks[i])) {
                     for (let j = 0; j < chunks[i].length; j++) {
                         currChunk.push({x: chunks[i][j].x + 1, y: chunks[i][j].y, active: chunks[i][j].active, centre: chunks[i][j].centre, colour: chunks[i][j].colour})
@@ -94,15 +76,12 @@ function Tetris () {
                     newChunks.push(currChunk)
                 }
             }
-            // console.log(JSON.stringify(chunks))
             return newChunks;
         })
         console.log('Move right');
     }
 
     const canMoveChunkLeft = (chunk) => {
-        // Checks the grid if it can move further down
-        // chunk = [{x: 0, y: 0, active: true}]
 
         // Get leftest of blocks
         let leftestBlocks = {}
@@ -118,8 +97,6 @@ function Tetris () {
         }
         leftestBlocks = Object.values(leftestBlocks)
 
-        // console.log(JSON.stringify(leftestBlocks));
-
         for (let i = 0; i < leftestBlocks.length; i++) {
             let block = leftestBlocks[i]
 
@@ -128,19 +105,14 @@ function Tetris () {
             }
         }
 
-        // console.log('Can move')
         return true
     }
-
-    // canMoveChunkLeft([{x: 0, y: 0, active: true}, {x: 1, y: 0, active: true}, {x: 1, y: 1, active: true}])
-
 
     const moveActiveChunksLeft = () => {
         setChunks(chunks => {
             let newChunks = [];
             for (let i = 0; i < chunks.length; i++) {
                 let currChunk = [];
-                // console.log(JSON.stringify(grid));
                 if (canMoveChunkLeft(chunks[i])) {
                     for (let j = 0; j < chunks[i].length; j++) {
                         currChunk.push({x: chunks[i][j].x - 1, y: chunks[i][j].y, active: chunks[i][j].active, centre: chunks[i][j].centre, colour: chunks[i][j].colour})
@@ -153,10 +125,8 @@ function Tetris () {
                     newChunks.push(currChunk)
                 }
             }
-            // console.log(JSON.stringify(chunks))
             return newChunks;
         })
-        console.log('Move left');
     }
 
     const moveActiveChunksDown = () => {
@@ -356,23 +326,20 @@ function Tetris () {
     const spawnChunk = () => {
 
         const chunksPossible = [
-            [{x: 0, y: 0, active: true, centre: false, colour: 'red'}, {x: 1, y: 0, active: true, centre: true, colour: 'red'}, {x: 2, y: 0, active: true, centre: false, colour: 'red'}, {x: 3, y: 0, active: true, centre: false, colour: 'red'}],
-            [{x: 0, y: 0, active: true, centre: false, colour: 'green'}, {x: 1, y: 0, active: true, centre: true, colour: 'green'}, {x: 2, y: 0, active: true, centre: false, colour: 'green'}, {x: 2, y: 1, active: true, centre: false, colour: 'green'}],
-            [{x: 0, y: 0, active: true, centre: false, colour: 'blue'}, {x: 1, y: 0, active: true, centre: true, colour: 'blue'}, {x: 2, y: 0, active: true, centre: false, colour: 'blue'}, {x: 0, y: 1, active: true, centre: false, colour: 'blue'}],
-            [{x: 0, y: 0, active: true, centre: false, colour: 'yellow'}, {x: 1, y: 0, active: true, centre: true, colour: 'yellow'}, {x: 2, y: 0, active: true, centre: false, colour: 'yellow'}, {x: 1, y: 1, active: true, centre: false, colour: 'yellow'}],
-            [{x: 0, y: 0, active: true, centre: false, colour: 'purple'}, {x: 1, y: 0, active: true, centre: true, colour: 'purple'}, {x: 0, y: 1, active: true, centre: false, colour: 'purple'}, {x: 1, y: 1, active: true, centre: false, colour: 'purple'}],
-            [{x: 0, y: 0, active: true, centre: false, colour: 'blue'}, {x: 1, y: 0, active: true, centre: true, colour: 'blue'}, {x: 1, y: 1, active: true, centre: false, colour: 'blue'}, {x: 2, y: 1, active: true, centre: false, colour: 'blue'}],
-            [{x: 0, y: 1, active: true, centre: false, colour: 'orange'}, {x: 1, y: 1, active: true, centre: false, colour: 'orange'}, {x: 1, y: 0, active: true, centre: true, colour: 'orange'}, {x: 2, y: 0, active: true, centre: false, colour: 'orange'}]
+            [{x: 0, y: 0, active: true, centre: false, colour: '#ed2121'}, {x: 1, y: 0, active: true, centre: true, colour: '#ed2121'}, {x: 2, y: 0, active: true, centre: false, colour: '#ed2121'}, {x: 3, y: 0, active: true, centre: false, colour: '#ed2121'}],
+            [{x: 0, y: 0, active: true, centre: false, colour: 'rgb(7,192,61)'}, {x: 1, y: 0, active: true, centre: true, colour: 'rgb(7,192,61)'}, {x: 2, y: 0, active: true, centre: false, colour: 'rgb(7,192,61)'}, {x: 2, y: 1, active: true, centre: false, colour: 'rgb(7,192,61)'}],
+            [{x: 0, y: 0, active: true, centre: false, colour: '#36a5ff'}, {x: 1, y: 0, active: true, centre: true, colour: '#36a5ff'}, {x: 2, y: 0, active: true, centre: false, colour: '#36a5ff'}, {x: 0, y: 1, active: true, centre: false, colour: '#36a5ff'}],
+            [{x: 0, y: 0, active: true, centre: false, colour: '#fff836'}, {x: 1, y: 0, active: true, centre: true, colour: '#fff836'}, {x: 2, y: 0, active: true, centre: false, colour: '#fff836'}, {x: 1, y: 1, active: true, centre: false, colour: '#fff836'}],
+            [{x: 0, y: 0, active: true, centre: false, colour: '#b854cc'}, {x: 1, y: 0, active: true, centre: true, colour: '#b854cc'}, {x: 0, y: 1, active: true, centre: false, colour: '#b854cc'}, {x: 1, y: 1, active: true, centre: false, colour: '#b854cc'}],
+            [{x: 0, y: 0, active: true, centre: false, colour: '#66fff2'}, {x: 1, y: 0, active: true, centre: true, colour: '#66fff2'}, {x: 1, y: 1, active: true, centre: false, colour: '#66fff2'}, {x: 2, y: 1, active: true, centre: false, colour: '#66fff2'}],
+            [{x: 0, y: 1, active: true, centre: false, colour: '#ff8819'}, {x: 1, y: 1, active: true, centre: false, colour: '#ff8819'}, {x: 1, y: 0, active: true, centre: true, colour: '#ff8819'}, {x: 2, y: 0, active: true, centre: false, colour: '#ff8819'}]
         ]
 
-        console.log('Spawning chunk!')
         setChunks(chunks => {
             const randomChunk = chunksPossible[Math.floor(Math.random() * chunksPossible.length)];
-            // let newChunks = [...chunks, [{x: 0, y: 0, active: true, centre: false}, {x: 1, y: 0, active: true, centre: true}, {x: 1, y: 1, active: true, centre: false}, {x: 0, y: 1, active: true, centre: false}]];
             let newChunks = [...chunks, randomChunk]
             return newChunks;
         })
-        console.log('Spawned chunk!')
     }
     
     const canMoveChunkDown = (chunk) => {
@@ -393,17 +360,14 @@ function Tetris () {
             }
         }
         lowestBlocks = Object.values(lowestBlocks)
-        // console.log(JSON.stringify(lowestBlocks))
         for (let i = 0; i < lowestBlocks.length; i++) {
             let block = lowestBlocks[i]
 
             if (block.y >= height - 1 || grid[block.y + 1][block.x] === true || !block.active) {
-                // console.log('Cant move')
                 return false
             }
         }
 
-        // console.log('Can move')
         return true
     }
 
@@ -440,27 +404,21 @@ function Tetris () {
         // console.log('Here!')
         if (gameActive) {
             setChunks(chunks => {
-                // console.log('Moving!')
-                // console.log(JSON.stringify(chunks))
                 let newChunks = [];
                 for (let i = 0; i < chunks.length; i++) {
                     let currChunk = [];
-                    // console.log(JSON.stringify(grid));
                     if (canMoveChunkDown(chunks[i])) {
-                        // console.log('Can move chunk down')
                         for (let j = 0; j < chunks[i].length; j++) {
                             currChunk.push({x: chunks[i][j].x, y: chunks[i][j].y + 1, active: true, centre: chunks[i][j].centre, colour: chunks[i][j].colour})
                         }
                         newChunks.push(currChunk)
                     } else {
-                        // console.log('Cant move chunk down')
                         for (let j = 0; j < chunks[i].length; j++) {
                             currChunk.push({x: chunks[i][j].x, y: chunks[i][j].y, active: false, centre: chunks[i][j].centre, colour: chunks[i][j].colour})
                         }
                         newChunks.push(currChunk)
                     }
                 }
-                // console.log(JSON.stringify(chunks))
                 return newChunks;
             })
         }
@@ -564,60 +522,127 @@ function Tetris () {
         localStorage.setItem('playoz-tetris-highest-score', Math.max(score, localStorage.getItem('playoz-tetris-highest-score')))
     }
 
-    return (
-        <GridContainer className='tetris-background'>
-            <div className='tetris-game'>
+    // RESPONSIVENESS
 
-                <div className='tetris-section'>
-                    <div className='tetris-instructions'>
-                        <Typography variant='h6'>Keyboard Controls</Typography>
-                        <br></br>
-                        <div className='arrow-instruction'>
-                            <img src={UpArrow} className='arrow'></img>
-                            <Typography variant='body2' className='inline-block'>Rotate Tetris block</Typography>
-                        </div>
-                        <div className='arrow-instruction'>
-                            <img src={LeftArrow} className='arrow'></img>
-                            <Typography variant='body2' className='inline-block'>Move Tetris block left</Typography>
-                        </div>
-                        <div className='arrow-instruction'>
-                            <img src={RightArrow} className='arrow'></img>
-                            <Typography variant='body2' className='inline-block'>Move Tetris block right</Typography>
-                        </div>
-                        <div className='arrow-instruction'>
-                            <img src={DownArrow} className='arrow'></img>
-                            <Typography variant='body2' className='inline-block'>Move Tetris block down</Typography>
-                        </div>
+    const checkMobile = () => {
+        if (window.innerWidth <= 944) {
+            return true
+        } else {
+            return false
+        }
+    }
+
+    const [isMobile, setIsMobile] = useState(checkMobile())
+
+    useEffect(() => {
+
+        const changeMobile = () => {
+            setIsMobile(checkMobile())
+        }
+
+        window.addEventListener('resize', changeMobile)
+
+        return () => window.removeEventListener('resize', changeMobile)
+    }, [])
+
+    if (isMobile) {
+        return (
+            <GridContainer className='tetris-background'>
+                <div className='tetris-game'>
+                    <div className='tetris-section'>
+                        <TetrisGrid score={score} grid={grid} colourGrid={colourGrid} gameActive={gameActive} initGame={initGame} stopGame={stopGame} rotateActiveChunks={rotateActiveChunks} moveActiveChunksLeft={moveActiveChunksLeft} moveActiveChunksDown={moveActiveChunksDown} moveActiveChunksRight={moveActiveChunksRight}/>
+                    </div>
+                    <div className='tetris-section'>
+                        <TetrisHighestScore />
+                    </div>
+                    <div className='tetris-section'>
+                        <TetrisInstructions />
                     </div>
                 </div>
-                <div className='tetris-section'>
-                    <Typography variant='h6'>Score: {score}</Typography>
-                    <div className='tetris-grid'>
-                        {grid.map((r, i) => {
-                            return (
-                                <div key={i} className='tetris-row'>
-                                    {console.log(JSON.stringify(colourGrid))}
-                                    {r.map((c, j) => <TetrisBlock key={j} active={c} colour={colourGrid[i][j]}/>)}
-                                </div>
-                            )
-                        })}
+            </GridContainer>
+        )
+    } else {
+        return (
+            <GridContainer className='tetris-background'>
+                <div className='tetris-game'>
+                    <div className='tetris-section'>
+                        <TetrisInstructions />
                     </div>
-                    <br></br>
-                    <div>
-                        {!gameActive ? <Button variant='contained' color='success' size='small' onClick={initGame}>Start Game</Button> : <Button variant='contained' color='error' size='small' onClick={stopGame}>Finish Game</Button>}
+                    <div className='tetris-section'>
+                        <TetrisGrid score={score} grid={grid} colourGrid={colourGrid} gameActive={gameActive} initGame={initGame} stopGame={stopGame} rotateActiveChunks={rotateActiveChunks} moveActiveChunksLeft={moveActiveChunksLeft} moveActiveChunksDown={moveActiveChunksDown} moveActiveChunksRight={moveActiveChunksRight}/>
+                    </div>
+                    <div className='tetris-section'>
+                        <TetrisHighestScore />
                     </div>
                 </div>
-                <div className='tetris-section'>
-                    <div className='tetris-highest-score'>
-                        <Typography variant='h6'>Your Highest Score</Typography>
-                        <Typography variant='h3' sx={{ textAlign: 'center' }}>{localStorage.getItem('playoz-tetris-highest-score')}</Typography>
-                    </div>
+            </GridContainer>
+        );
+    }
+}
+
+function TetrisInstructions() {
+    return (
+        <div className='tetris-instructions'>
+            <Typography variant='h6'>Keyboard Controls</Typography>
+            <br></br>
+            <div className='arrow-instruction'>
+                <img src={UpArrow} className='arrow'></img> &nbsp; &nbsp; 
+                <Typography variant='body2' className='inline-block'>Rotate Tetris block</Typography>
+            </div>
+            <div className='arrow-instruction'>
+                <img src={LeftArrow} className='arrow'></img> &nbsp; &nbsp; 
+                <Typography variant='body2' className='inline-block'>Move Tetris block left</Typography>
+            </div>
+            <div className='arrow-instruction'>
+                <img src={RightArrow} className='arrow'></img> &nbsp; &nbsp; 
+                <Typography variant='body2' className='inline-block'>Move Tetris block right</Typography>
+            </div>
+            <div className='arrow-instruction'>
+                <img src={DownArrow} className='arrow'></img> &nbsp; &nbsp; 
+                <Typography variant='body2' className='inline-block'>Move Tetris block down</Typography>
+            </div>
+        </div>
+    )
+}
+
+function TetrisGrid(props) {
+
+    return (
+        <>
+            <Typography variant='h6'>Score: {props.score}</Typography>
+            <div className='tetris-grid'>
+                {props.grid.map((r, i) => {
+                    return (
+                        <div key={i} className='tetris-row'>
+                            {r.map((c, j) => <TetrisBlock key={j} active={c} colour={props.colourGrid[i][j]}/>)}
+                        </div>
+                    )
+                })}
+            </div>
+            <br></br>
+            <div className='tetris-settings'>
+                <div className='tetris-controls'>
+                    <img src={UpArrow} className='arrow pointer' onClick={props.rotateActiveChunks}></img>
+                    <img src={LeftArrow} className='arrow pointer' onClick={props.moveActiveChunksLeft}></img>
+                    <img src={RightArrow} className='arrow pointer' onClick={props.moveActiveChunksRight}></img>
+                    <img src={DownArrow} className='arrow pointer' onClick={props.moveActiveChunksDown}></img>
+                </div>
+                <div>
+                    {!props.gameActive ? <Button variant='contained' color='success' size='small' onClick={props.initGame}>Start Game</Button> : <Button variant='contained' color='error' size='small' onClick={props.stopGame}>Finish Game</Button>}
                 </div>
             </div>
-            
-            
-        </GridContainer>
-    );
+        </>
+
+    )
+}
+
+function TetrisHighestScore() {
+    return (
+        <div className='tetris-highest-score'>
+            <Typography variant='h6'>Your Highest Score</Typography>
+            <Typography variant='h3' sx={{ textAlign: 'center' }}>{localStorage.getItem('playoz-tetris-highest-score')}</Typography>
+        </div>
+    )
 }
 
 function TetrisBlock(props) {

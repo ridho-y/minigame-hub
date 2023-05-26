@@ -9,7 +9,7 @@ function GridContainer (props) {
       alignItems='center'
       justifyContent='center'
       className={props.className}
-      sx={{ height: 'calc(100vh - 64px)', top: '64px', position: 'absolute' }} // 64px is height of header
+      sx={{ minHeight: 'calc(100% - 64px)', top: '64px', position: 'absolute' }} // 64px is height of header
     >
       {props.children}
     </Grid>

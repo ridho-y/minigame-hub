@@ -1,0 +1,108 @@
+:root {
+    --darkBackground: white;
+}
+
+.tetris-game {
+    display: flex;
+    flex-direction: row;
+    width: 90%;
+    height: 100%;
+}
+
+@media(max-width: 944px) {
+    .tetris-game {
+        flex-direction: column;
+    }
+}
+
+.tetris-section {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 20px;
+}
+
+.tetris-settings {
+    display: flex;
+    flex-direction: column;
+    row-gap: 15px;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}
+
+.tetris-background {
+    background-color: rgb(255, 252, 233);
+    background-repeat: repeat;
+    background-position: 50% 0%;
+    background-image: url(../assets/tetris-background.svg);
+}
+
+.tetris-instructions, .tetris-highest-score {
+    background-color: white;
+    border-radius: 10px;
+    padding: 30px;
+    background-color: rgb(241, 241, 241);
+    border: 5px solid rgb(95, 95, 95);
+}
+
+.arrow {
+    width: 30px;
+}
+
+.inline-block {
+    display: inline-block;
+}
+
+.arrow-instruction {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.tetris-block {
+    border: 0.1px solid rgb(44, 44, 44);
+}
+
+.tetris-grid {
+    border: 3px solid rgb(201, 201, 201);
+    border-radius: 4px;
+    display: flex;
+    flex-direction: column;
+}
+
+.tetris-row {
+    display: flex;
+    flex-direction: row;
+}
+
+.tetris-block {
+    height: 20px;
+    width: 20px;
+}
+
+.tetris-controls {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 200px;
+}
+
+
+.tetris-dark {
+    background-color: var(--darkBackground)
+}
+
+.cell {
+    height: 90px;
+    width: 90px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 5px;
+    background-color: var(--darkBackground);
+    font-size: 30px;
+    font-weight: bold;
+}
