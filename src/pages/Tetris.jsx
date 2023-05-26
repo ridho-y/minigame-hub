@@ -639,15 +639,15 @@ function TetrisGrid(props) {
             </div>
             <br></br>
             <div className='tetris-settings'>
+                {!props.gameActive ? <Button variant='contained' color='success' size='small' onClick={props.initGame}>Start Game</Button> : <Button variant='contained' color='error' size='small' onClick={props.stopGame}>Finish Game</Button>}
+                <br></br>
+                <div className='tetris-controls'>
+                    <img src={UpArrow} className='arrow pointer' onClick={props.rotateActiveChunks}></img>
+                </div>
                 <div className='tetris-controls'>
                     <img src={LeftArrow} className='arrow pointer' onClick={props.moveActiveChunksLeft}></img>
-                    <img src={UpArrow} className='arrow pointer' onClick={props.rotateActiveChunks}></img>
                     <img src={DownArrow} className='arrow pointer' onClick={props.moveActiveChunksDown}></img>
                     <img src={RightArrow} className='arrow pointer' onClick={props.moveActiveChunksRight}></img>
-
-                </div>
-                <div>
-                    {!props.gameActive ? <Button variant='contained' color='success' size='small' onClick={props.initGame}>Start Game</Button> : <Button variant='contained' color='error' size='small' onClick={props.stopGame}>Finish Game</Button>}
                 </div>
             </div>
         </>
