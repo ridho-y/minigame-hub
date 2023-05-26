@@ -28,7 +28,7 @@ function Home() {
                 <GameCardSmall 
                     title={'8-Puzzle'} 
                     link={'/slido'}
-                    description={'Engage your mind in the captivating sliding puzzle game! Slide numbered tiles in a grid, strategically moving the blank space to solve the puzzle and reveal the hidden image. Test your logic and enjoy the thrill of arranging the pieces perfectly. Can you conquer this challenging puzzle?'}
+                    description={'Step into the world of Modern Family with the 8-puzzle! Slide tiles featuring beloved characters and hilarious moments, revealing a Modern Family meme. Piece together the laughter, test your skills, and crack the puzzle. Can you crack the tiles and unlock the laughter?'}
                 />
                 <GameCardLarge 
                     title={'2048'} 

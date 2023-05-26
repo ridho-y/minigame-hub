@@ -57,7 +57,7 @@ function Blanko() {
     return (
         <GridContainer className='blanko-background'>
             <div className='blanko-box'>
-                <Typography>Guess the Aussie slang!</Typography>
+                <Typography variant='body1'>Guess the Aussie slang!</Typography>
                 <br></br>
                 <Box className='word'>
                     {currWord.map((c, i) => <Square key={i} idx={i} letter={c} blankIdxs={blankIdxs} setCurrWord={setCurrWord} word={word} />)}
