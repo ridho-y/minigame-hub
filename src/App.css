@@ -14,6 +14,8 @@ body {
     transition: 0.5s;
 }
 
+/* Blanko */
+
 .square {
     width: 50px;
     height: 50px;
@@ -27,6 +29,42 @@ body {
     flex-direction: row;
     border: 1px solid black;
     border-radius: 5px;
+}
+
+.blanko-background {
+    background-image: url('assets/aussie-background.svg');
+    background-size: cover;
+    background-position: 90%;
+}
+
+.blanko-box {
+    background-color: rgb(255, 252, 233);
+    padding: 50px;
+    padding-bottom: 30px;
+    border-radius: 200px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+@media(max-width: 700px) {
+
+    .word {
+        padding: 10px;
+    }
+
+    .square {
+        width: 20px;
+        height: 20px;
+    }
+
+    .blank-font-size {
+        font-size: 15px !important;
+    }
+    
+    .input-size {
+        width: 17px !important;
+    }
 }
 
 .grid {

@@ -55,14 +55,16 @@ function Blanko() {
     }, [reset])
 
     return (
-        <GridContainer>
-            <Typography>Guess the Aussie slang!</Typography>
-            <br></br>
-            <Box className='word'>
-                {currWord.map((c, i) => <Square key={i} idx={i} letter={c} blankIdxs={blankIdxs} setCurrWord={setCurrWord} word={word} />)}
-            </Box>
-            <br></br>
-            <Button variant='outlined' color='error' size='small' style={{ position: 'absolute', bottom: '20px'}} onClick={initGame}>Reset</Button>
+        <GridContainer className='blanko-background'>
+            <div className='blanko-box'>
+                <Typography>Guess the Aussie slang!</Typography>
+                <br></br>
+                <Box className='word'>
+                    {currWord.map((c, i) => <Square key={i} idx={i} letter={c} blankIdxs={blankIdxs} setCurrWord={setCurrWord} word={word} />)}
+                </Box>
+                <br></br>
+                <Button variant='outlined' color='error' size='small' onClick={initGame}>Reset</Button>
+            </div>
         </GridContainer>
     )
 }
@@ -81,9 +83,9 @@ function Square(props) {
 
     let space = '';
     if (props.blankIdxs.includes(props.idx)) {
-        space = <Input sx={{ mx: 1 }} inputProps={{ maxLength: 1, style: { textAlign: 'center' } }} onChange={handleChange} value={input} name={`${Math.floor(Math.random() * 10000)}`}/>
+        space = <Input sx={{ mx: 1 }} inputProps={{ className: 'input-size', maxLength: 1, style: { textAlign: 'center' }, autoCapitalize: 'off' }} onChange={handleChange} value={input} name={`${Math.floor(Math.random() * 10000)}`}/>
     } else {
-        space = <Typography>{props.word[props.idx]}</Typography>
+        space = <Typography className='blank-font-size'>{props.word[props.idx]}</Typography>
     }
 
     return (

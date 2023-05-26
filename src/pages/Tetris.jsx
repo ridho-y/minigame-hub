@@ -509,6 +509,8 @@ function Tetris () {
         }
     }, [grid])
 
+    const [soundStatus, setSoundStatus] = useState(Sound.status.STOPPED)
+
     const initGame = () => {
         if (!gameActive) {
             setGameActive(true);
@@ -516,6 +518,7 @@ function Tetris () {
             setScore(0);
             setGrid(initGrid);
             spawnChunk();
+            setSoundStatus(Sound.status.PLAYING)
         }
     }
 
@@ -550,7 +553,12 @@ function Tetris () {
     if (isMobile) {
         return (
             <GridContainer className='tetris-background'>
-                
+                <Sound
+                    url={TetrisSoundTrack}
+                    playStatus={soundStatus}
+                    loop
+                    volume={5}
+                />                
                 <div className='tetris-game'>
                     <div className='tetris-section'>
                         <TetrisGrid score={score} grid={grid} colourGrid={colourGrid} gameActive={gameActive} initGame={initGame} stopGame={stopGame} rotateActiveChunks={rotateActiveChunks} moveActiveChunksLeft={moveActiveChunksLeft} moveActiveChunksDown={moveActiveChunksDown} moveActiveChunksRight={moveActiveChunksRight}/>
@@ -562,17 +570,18 @@ function Tetris () {
                         <TetrisInstructions />
                     </div>
                 </div>
-                <Sound
-                    url={TetrisSoundTrack}
-                    playStatus={Sound.status.PLAYING}
-                    loop
-                    volume={5}
-                />
+
             </GridContainer>
         )
     } else {
         return (
             <GridContainer className='tetris-background'>
+                <Sound
+                    url={TetrisSoundTrack}
+                    playStatus={soundStatus}
+                    loop
+                    volume={5}
+                />
                 <div className='tetris-game'>
                     <div className='tetris-section'>
                         <TetrisInstructions />
@@ -584,12 +593,6 @@ function Tetris () {
                         <TetrisHighestScore />
                     </div>
                 </div>
-                <Sound
-                    url={TetrisSoundTrack}
-                    playStatus={Sound.status.PLAYING}
-                    loop
-                    volume={5}
-                />
             </GridContainer>
         );
     }
@@ -637,10 +640,11 @@ function TetrisGrid(props) {
             <br></br>
             <div className='tetris-settings'>
                 <div className='tetris-controls'>
-                    <img src={UpArrow} className='arrow pointer' onClick={props.rotateActiveChunks}></img>
                     <img src={LeftArrow} className='arrow pointer' onClick={props.moveActiveChunksLeft}></img>
-                    <img src={RightArrow} className='arrow pointer' onClick={props.moveActiveChunksRight}></img>
+                    <img src={UpArrow} className='arrow pointer' onClick={props.rotateActiveChunks}></img>
                     <img src={DownArrow} className='arrow pointer' onClick={props.moveActiveChunksDown}></img>
+                    <img src={RightArrow} className='arrow pointer' onClick={props.moveActiveChunksRight}></img>
+
                 </div>
                 <div>
                     {!props.gameActive ? <Button variant='contained' color='success' size='small' onClick={props.initGame}>Start Game</Button> : <Button variant='contained' color='error' size='small' onClick={props.stopGame}>Finish Game</Button>}

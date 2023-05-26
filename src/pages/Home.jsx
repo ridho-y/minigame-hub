@@ -23,7 +23,7 @@ function Home() {
                 <GameCardSmall 
                     title={'Blanko'} 
                     link={'/blanko'}
-                    description={'Embark on an Aussie adventure with the Fill-in-the-Blank game! Immerse yourself in the unique world of Australian phrases as you uncover the missing three letters. Test your knowledge, embrace the lively slang, and unravel the puzzle.'}
+                    description={'Embark on an Aussie adventure with Blanko! Immerse yourself in the unique world of Australian phrases as you uncover the missing three letters. Test your knowledge, embrace the lively slang, and unravel the puzzle.'}
                 />
                 <GameCardSmall 
                     title={'8-Puzzle'} 

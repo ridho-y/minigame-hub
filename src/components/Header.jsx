@@ -1,7 +1,8 @@
 import * as React from 'react';
 import { AppBar, Box, Toolbar, Typography, Container, Button } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
-import Character from '../assets/character.gif'
+import Logo from '../assets/logo.png'
+
 import SportsBaseballOutlinedIcon from '@mui/icons-material/SportsBaseballOutlined';
 
 function Header() {
@@ -88,7 +89,7 @@ function Header() {
                         </Typography>
                     </Box>
                     <Box sx={{ flex: 1, justifyContent: 'right', display: 'flex', flexDirection: 'row' }}>
-                        <img src={Character} style={{ height: '40px' }}></img>
+                        <img src={Logo} style={{ height: '45px' }}></img>
                     </Box>
                 </Toolbar>
             </Container>
