@@ -1,13 +1,23 @@
 import React, { useEffect, useState } from 'react'
 import GridContainer from '../helpers/GridContainer'
-import { Button, Grid } from '@mui/material'
+import { Button, Typography } from '@mui/material'
 import useInterval from 'use-interval'
+import UpArrow from '../assets/up-arrow.svg'
+import DownArrow from '../assets/down-arrow.svg'
+import LeftArrow from '../assets/left-arrow.svg'
+import RightArrow from '../assets/right-arrow.svg'
 
 function Tetris () {
+
+
+    if (localStorage.getItem('playoz-tetris-highest-score') === undefined) {
+        localStorage.setItem('playoz-tetris-highest-score', '0')
+    }
 
     // list of chunks and each chunk has list of blocks, each block stores its x and y val
     const [chunks, setChunks] = useState([])
     const [gameActive, setGameActive] = useState(false)
+    const [score, setScore] = useState(0)
     // chunks = [[{x: 1, y: 2, active: true, centre: false}, {x: 1, y: 3, active: true, centre: false}]]
 
     // upon changing of chunks set the grid
@@ -18,7 +28,13 @@ function Tetris () {
         initGrid.push(Array(width).fill(false))
     }
     
+    let initColourGrid = []
+    for (let i = 0; i < height; i++) {
+        initColourGrid.push(Array(width).fill('black'))
+    }
+
     const [grid, setGrid] = useState(initGrid)
+    const [colourGrid, setColourGrid] = useState(initColourGrid);
 
     const canMoveChunkRight = (chunk) => {
         // Checks the grid if it can move further down
@@ -68,12 +84,12 @@ function Tetris () {
                 // console.log(JSON.stringify(grid));
                 if (canMoveChunkRight(chunks[i])) {
                     for (let j = 0; j < chunks[i].length; j++) {
-                        currChunk.push({x: chunks[i][j].x + 1, y: chunks[i][j].y, active: chunks[i][j].active, centre: chunks[i][j].centre})
+                        currChunk.push({x: chunks[i][j].x + 1, y: chunks[i][j].y, active: chunks[i][j].active, centre: chunks[i][j].centre, colour: chunks[i][j].colour})
                     }
                     newChunks.push(currChunk)
                 } else {
                     for (let j = 0; j < chunks[i].length; j++) {
-                        currChunk.push({x: chunks[i][j].x, y: chunks[i][j].y, active: chunks[i][j].active, centre: chunks[i][j].centre})
+                        currChunk.push({x: chunks[i][j].x, y: chunks[i][j].y, active: chunks[i][j].active, centre: chunks[i][j].centre, colour: chunks[i][j].colour})
                     }
                     newChunks.push(currChunk)
                 }
@@ -127,12 +143,12 @@ function Tetris () {
                 // console.log(JSON.stringify(grid));
                 if (canMoveChunkLeft(chunks[i])) {
                     for (let j = 0; j < chunks[i].length; j++) {
-                        currChunk.push({x: chunks[i][j].x - 1, y: chunks[i][j].y, active: chunks[i][j].active, centre: chunks[i][j].centre})
+                        currChunk.push({x: chunks[i][j].x - 1, y: chunks[i][j].y, active: chunks[i][j].active, centre: chunks[i][j].centre, colour: chunks[i][j].colour})
                     }
                     newChunks.push(currChunk)
                 } else {
                     for (let j = 0; j < chunks[i].length; j++) {
-                        currChunk.push({x: chunks[i][j].x, y: chunks[i][j].y, active: chunks[i][j].active, centre: chunks[i][j].centre})
+                        currChunk.push({x: chunks[i][j].x, y: chunks[i][j].y, active: chunks[i][j].active, centre: chunks[i][j].centre, colour: chunks[i][j].colour})
                     }
                     newChunks.push(currChunk)
                 }
@@ -151,12 +167,12 @@ function Tetris () {
                 // console.log(JSON.stringify(grid));
                 if (canMoveChunkDown(chunks[i])) {
                     for (let j = 0; j < chunks[i].length; j++) {
-                        currChunk.push({x: chunks[i][j].x, y: chunks[i][j].y + 1, active: chunks[i][j].active, centre: chunks[i][j].centre})
+                        currChunk.push({x: chunks[i][j].x, y: chunks[i][j].y + 1, active: chunks[i][j].active, centre: chunks[i][j].centre, colour: chunks[i][j].colour})
                     }
                     newChunks.push(currChunk)
                 } else {
                     for (let j = 0; j < chunks[i].length; j++) {
-                        currChunk.push({x: chunks[i][j].x, y: chunks[i][j].y, active: chunks[i][j].active, centre: chunks[i][j].centre})
+                        currChunk.push({x: chunks[i][j].x, y: chunks[i][j].y, active: chunks[i][j].active, centre: chunks[i][j].centre, colour: chunks[i][j].colour})
                     }
                     newChunks.push(currChunk)
                 }
@@ -312,15 +328,48 @@ function Tetris () {
                     // console.log(newGrid)
                     return newGrid;
                 })
+
+            }
+        }
+    }, [chunks])
+
+
+    useEffect(() => {
+        // console.log('WHOO')
+        for (let i = 0; i < chunks.length; i++) {
+            let chunk = chunks[i];
+            for (let j = 0; j < chunk.length; j++) {
+                let block = chunk[j];
+                // console.log(block)
+                // console.log(JSON.stringify(grid))
+                setColourGrid(() => {
+                    let newGrid = [...initColourGrid];
+                    newGrid[block.y][block.x] = block.colour;
+                    // console.log(newGrid)
+                    return newGrid;
+                })
+
             }
         }
     }, [chunks])
 
     const spawnChunk = () => {
+
+        const chunksPossible = [
+            [{x: 0, y: 0, active: true, centre: false, colour: 'red'}, {x: 1, y: 0, active: true, centre: true, colour: 'red'}, {x: 2, y: 0, active: true, centre: false, colour: 'red'}, {x: 3, y: 0, active: true, centre: false, colour: 'red'}],
+            [{x: 0, y: 0, active: true, centre: false, colour: 'green'}, {x: 1, y: 0, active: true, centre: true, colour: 'green'}, {x: 2, y: 0, active: true, centre: false, colour: 'green'}, {x: 2, y: 1, active: true, centre: false, colour: 'green'}],
+            [{x: 0, y: 0, active: true, centre: false, colour: 'blue'}, {x: 1, y: 0, active: true, centre: true, colour: 'blue'}, {x: 2, y: 0, active: true, centre: false, colour: 'blue'}, {x: 0, y: 1, active: true, centre: false, colour: 'blue'}],
+            [{x: 0, y: 0, active: true, centre: false, colour: 'yellow'}, {x: 1, y: 0, active: true, centre: true, colour: 'yellow'}, {x: 2, y: 0, active: true, centre: false, colour: 'yellow'}, {x: 1, y: 1, active: true, centre: false, colour: 'yellow'}],
+            [{x: 0, y: 0, active: true, centre: false, colour: 'purple'}, {x: 1, y: 0, active: true, centre: true, colour: 'purple'}, {x: 0, y: 1, active: true, centre: false, colour: 'purple'}, {x: 1, y: 1, active: true, centre: false, colour: 'purple'}],
+            [{x: 0, y: 0, active: true, centre: false, colour: 'blue'}, {x: 1, y: 0, active: true, centre: true, colour: 'blue'}, {x: 1, y: 1, active: true, centre: false, colour: 'blue'}, {x: 2, y: 1, active: true, centre: false, colour: 'blue'}],
+            [{x: 0, y: 1, active: true, centre: false, colour: 'orange'}, {x: 1, y: 1, active: true, centre: false, colour: 'orange'}, {x: 1, y: 0, active: true, centre: true, colour: 'orange'}, {x: 2, y: 0, active: true, centre: false, colour: 'orange'}]
+        ]
+
         console.log('Spawning chunk!')
         setChunks(chunks => {
+            const randomChunk = chunksPossible[Math.floor(Math.random() * chunksPossible.length)];
             // let newChunks = [...chunks, [{x: 0, y: 0, active: true, centre: false}, {x: 1, y: 0, active: true, centre: true}, {x: 1, y: 1, active: true, centre: false}, {x: 0, y: 1, active: true, centre: false}]];
-            let newChunks = [...chunks, [{x: 0, y: 0, active: true, centre: false}, {x: 1, y: 0, active: true, centre: false}, {x: 2, y: 0, active: true, centre: true}, {x: 3, y: 0, active: true, centre: false}, {x: 4, y: 0, active: true, centre: false}]]
+            let newChunks = [...chunks, randomChunk]
             return newChunks;
         })
         console.log('Spawned chunk!')
@@ -400,13 +449,13 @@ function Tetris () {
                     if (canMoveChunkDown(chunks[i])) {
                         // console.log('Can move chunk down')
                         for (let j = 0; j < chunks[i].length; j++) {
-                            currChunk.push({x: chunks[i][j].x, y: chunks[i][j].y + 1, active: true, centre: chunks[i][j].centre})
+                            currChunk.push({x: chunks[i][j].x, y: chunks[i][j].y + 1, active: true, centre: chunks[i][j].centre, colour: chunks[i][j].colour})
                         }
                         newChunks.push(currChunk)
                     } else {
                         // console.log('Cant move chunk down')
                         for (let j = 0; j < chunks[i].length; j++) {
-                            currChunk.push({x: chunks[i][j].x, y: chunks[i][j].y, active: false, centre: chunks[i][j].centre})
+                            currChunk.push({x: chunks[i][j].x, y: chunks[i][j].y, active: false, centre: chunks[i][j].centre, colour: chunks[i][j].colour})
                         }
                         newChunks.push(currChunk)
                     }
@@ -459,6 +508,7 @@ function Tetris () {
                 if (grid[i].filter(v => !v).length === 0 && inactiveRow(i)) {
                     console.log(`ELIMINATE ROW! ${i}`)
                     console.log(JSON.stringify(grid))
+                    setScore(score => score + 100)
 
                     // Eliminate row and shift rows < i down
                     setChunks(chunks => {
@@ -503,6 +553,7 @@ function Tetris () {
         if (!gameActive) {
             setGameActive(true);
             setChunks([]);
+            setScore(0);
             setGrid(initGrid);
             spawnChunk();
         }
@@ -510,34 +561,76 @@ function Tetris () {
 
     const stopGame = () => {
         setGameActive(false)
+        localStorage.setItem('playoz-tetris-highest-score', Math.max(score, localStorage.getItem('playoz-tetris-highest-score')))
     }
 
     return (
-        <GridContainer>
-            <div className='tetris-grid'>
-                {grid.map((r, i) => {
-                    return (
-                        <div key={i} className='tetris-row'>
-                            {r.map((c, j) => <TetrisBlock key={j} active={c}/>)}
+        <GridContainer className='tetris-background'>
+            <div className='tetris-game'>
+
+                <div className='tetris-section'>
+                    <div className='tetris-instructions'>
+                        <Typography variant='h6'>Keyboard Controls</Typography>
+                        <br></br>
+                        <div className='arrow-instruction'>
+                            <img src={UpArrow} className='arrow'></img>
+                            <Typography variant='body2' className='inline-block'>Rotate Tetris block</Typography>
                         </div>
-                    )
-                })}
+                        <div className='arrow-instruction'>
+                            <img src={LeftArrow} className='arrow'></img>
+                            <Typography variant='body2' className='inline-block'>Move Tetris block left</Typography>
+                        </div>
+                        <div className='arrow-instruction'>
+                            <img src={RightArrow} className='arrow'></img>
+                            <Typography variant='body2' className='inline-block'>Move Tetris block right</Typography>
+                        </div>
+                        <div className='arrow-instruction'>
+                            <img src={DownArrow} className='arrow'></img>
+                            <Typography variant='body2' className='inline-block'>Move Tetris block down</Typography>
+                        </div>
+                    </div>
+                </div>
+                <div className='tetris-section'>
+                    <Typography variant='h6'>Score: {score}</Typography>
+                    <div className='tetris-grid'>
+                        {grid.map((r, i) => {
+                            return (
+                                <div key={i} className='tetris-row'>
+                                    {console.log(JSON.stringify(colourGrid))}
+                                    {r.map((c, j) => <TetrisBlock key={j} active={c} colour={colourGrid[i][j]}/>)}
+                                </div>
+                            )
+                        })}
+                    </div>
+                    <br></br>
+                    <div>
+                        {!gameActive ? <Button variant='contained' color='success' size='small' onClick={initGame}>Start Game</Button> : <Button variant='contained' color='error' size='small' onClick={stopGame}>Finish Game</Button>}
+                    </div>
+                </div>
+                <div className='tetris-section'>
+                    <div className='tetris-highest-score'>
+                        <Typography variant='h6'>Your Highest Score</Typography>
+                        <Typography variant='h3' sx={{ textAlign: 'center' }}>{localStorage.getItem('playoz-tetris-highest-score')}</Typography>
+                    </div>
+                </div>
             </div>
-            <br></br>
-            {!gameActive ? <Button variant='contained' color='success' size='small' onClick={initGame}>Start Game</Button> : <Button variant='contained' color='error' size='small' onClick={stopGame}>Stop Game</Button>}
+            
+            
         </GridContainer>
     );
 }
 
 function TetrisBlock(props) {
     
-    let bg = 'white'
+    let bg = '#202020'
     if (props.active) {
-        bg = 'red'
+        bg = props.colour
+    } else {
+        bg = '#202020'
     }
 
     return (
-        <div className='tetris-block' style={{ backgroundColor: bg }}></div>
+        <div className='tetris-block tetris-dark' style={{ backgroundColor: bg }}></div>
     )
 }
 

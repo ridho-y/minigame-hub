@@ -37,6 +37,7 @@ function Home() {
                     description={'Embark on a numbers adventure with 2048! Combine tiles to reach the elusive 2048 tile and beyond. With each strategic move, witness your numbers grow and your mind sharpen. Addictive and satisfying, this puzzle game will captivate you. Can you conquer the challenge and reach the ultimate number?'}
                 />
             </Grid>
+            <br />
         </GridContainerUp>
     );
 }
