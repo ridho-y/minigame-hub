@@ -9,11 +9,7 @@
     height: 100%;
 }
 
-@media(max-width: 944px) {
-    .tetris-game {
-        flex-direction: column;
-    }
-}
+
 
 .tetris-section {
     flex: 1;
@@ -117,4 +113,32 @@
     background-color: var(--darkBackground);
     font-size: 30px;
     font-weight: bold;
+}
+
+.sound-settings {
+    position: fixed;
+    bottom: 0;
+    right: 60px;
+    width: 70px;
+    height: 70px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+}
+
+@media(max-width: 944px) {
+    .tetris-game {
+        flex-direction: column;
+    }
+
+    .sound-settings {
+        width: 50px;
+        height: 50px;
+        right: 0;
+        top: 115px;
+        border-top-right-radius: 0px;
+        border-bottom-left-radius: 5px;
+    }
 }

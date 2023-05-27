@@ -8,7 +8,10 @@ import LeftArrow from '../assets/left-arrow.svg'
 import RightArrow from '../assets/right-arrow.svg'
 import '../styles/Tetris.css'
 import Sound from 'react-sound';
-import TetrisSoundTrack from '../assets/tetris-soundtrack.mp3';
+import TetrisSoundTrack from '../assets/tetris-soundtrack.m4a';
+import MusicNoteIcon from '@mui/icons-material/MusicNote';
+import MusicOffIcon from '@mui/icons-material/MusicOff';
+import { useTheme } from '@emotion/react'
 
 function Tetris () {
 
@@ -550,6 +553,8 @@ function Tetris () {
         return () => window.removeEventListener('resize', changeMobile)
     }, [])
 
+    const theme = useTheme();
+
     if (isMobile) {
         return (
             <GridContainer className='tetris-background'>
@@ -570,7 +575,12 @@ function Tetris () {
                         <TetrisInstructions />
                     </div>
                 </div>
-
+                <div className='sound-settings pointer' style={{ backgroundColor: theme.palette.primary.main }} onClick={() => soundStatus === Sound.status.STOPPED ? setSoundStatus(Sound.status.PLAYING) : setSoundStatus(Sound.status.STOPPED)}>
+                    {soundStatus === Sound.status.PLAYING ? 
+                        <MusicNoteIcon sx={{ width: '90%', height: '90%', color: theme.palette.secondary.light }}/> 
+                        : 
+                        <MusicOffIcon sx={{ width: '90%', height: '90%', color: theme.palette.secondary.light }}/>}
+                </div>
             </GridContainer>
         )
     } else {
@@ -592,6 +602,12 @@ function Tetris () {
                     <div className='tetris-section'>
                         <TetrisHighestScore />
                     </div>
+                </div>
+                <div className='sound-settings pointer' style={{ backgroundColor: theme.palette.primary.main }} onClick={() => soundStatus === Sound.status.STOPPED ? setSoundStatus(Sound.status.PLAYING) : setSoundStatus(Sound.status.STOPPED)}>
+                    {soundStatus === Sound.status.PLAYING ? 
+                        <MusicNoteIcon sx={{ width: '90%', height: '90%', color: theme.palette.secondary.light }}/> 
+                        : 
+                        <MusicOffIcon sx={{ width: '90%', height: '90%', color: theme.palette.secondary.light }}/>}
                 </div>
             </GridContainer>
         );
