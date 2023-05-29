@@ -3,6 +3,10 @@ import { startBoard, moveUp, moveRight, moveDown, moveLeft, getScore, setScore2 
 import '../styles/Game2048.css'
 import GridContainer from '../helpers/GridContainer.jsx';
 import { Typography } from '@mui/material';
+import UpArrow from '../assets/up-arrow.svg'
+import DownArrow from '../assets/down-arrow.svg'
+import LeftArrow from '../assets/left-arrow.svg'
+import RightArrow from '../assets/right-arrow.svg'
 
 function Game2048 () {
     
@@ -92,29 +96,129 @@ function Game2048 () {
     })
     
 
+    // RESPONSIVENESS
+
+    const checkMobile = () => {
+        if (window.innerWidth <= 1100) {
+            return true
+        } else {
+            return false
+        }
+    }
+
+    const [isMobile, setIsMobile] = useState(checkMobile())
+
+    useEffect(() => {
+
+        const changeMobile = () => {
+            setIsMobile(checkMobile())
+        }
+
+        window.addEventListener('resize', changeMobile)
+
+        return () => window.removeEventListener('resize', changeMobile)
+    }, [])
+
+    if (isMobile) {
+        return (
+            <GridContainer className='background-2048'>
+                <div className='game2048'> 
+                    <Game2048Board board={board} score={score} setBoard={setBoard} moveUp={moveUp} moveDown={moveDown} moveRight={moveRight} moveLeft={moveLeft}/>
+                    <Game2048Instructions />
+                    <Game2048Controls />
+                </div>
+            </GridContainer>
+    
+        );
+    } else {
+        return (
+            <GridContainer className='background-2048'>
+                <div className='game2048'> 
+                    <Game2048Instructions />
+                    <Game2048Board board={board} score={score} setBoard={setBoard} moveUp={moveUp} moveDown={moveDown} moveRight={moveRight} moveLeft={moveLeft}/>
+                    <Game2048Controls />
+                </div>
+            </GridContainer>
+    
+        );
+    }
+
+}
+
+function Game2048Board(props) {
+
     return (
-        <GridContainer className='background-2048'>
+        <div className='game2048-section'>
             <div className='game2048-header'>
                 <Typography className='game2048-name'>2048</Typography>
                 <div className='game2048-info'>
-                    <span className='game2048-score'><Typography className='info-name'>SCORE</Typography><Typography className='info-num'>{score}</Typography></span>
+                    <span className='game2048-score'><Typography className='info-name'>SCORE</Typography><Typography className='info-num'>{props.score}</Typography></span>
                     <span className='game2048-highest-score'><Typography className='info-name'>BEST</Typography><Typography className='info-num'>{localStorage.getItem('playoz-2048-highest-score')}</Typography></span>
                 </div>
             </div>
             <br></br>
-            
             <div id='game'>
                 <div id='board'>
-                    {board.map((r,i) => {
+                    {props.board.map((r,i) => {
                         return r.map((c,j) => {
                             return <Cell key={j} val={c} posX={j} posY={i}/>
                         })
                     })}
                 </div>
             </div>
-        </GridContainer>
+            <div className='tetris-settings'>
+                <br></br>
+                <div className='tetris-controls'>
+                    <img src={UpArrow} className='arrow pointer' onClick={() => props.setBoard(board => props.moveUp([...board]))}></img>
+                </div>
+                <div className='tetris-controls'>
+                    <img src={LeftArrow} className='arrow pointer' onClick={() => props.setBoard(board => props.moveLeft([...board]))}></img>
+                    <img src={DownArrow} className='arrow pointer' onClick={() => props.setBoard(board => props.moveDown([...board]))}></img>
+                    <img src={RightArrow} className='arrow pointer' onClick={() => props.setBoard(board => props.moveRight([...board]))}></img>
+                </div>
+            </div>
+        </div>
+    )
+}
 
-    );
+function Game2048Instructions() {
+    return (
+        <div className='game2048-section'>
+            <div className='game2048-instructions'>
+                <Typography variant='h4'>How to Play:</Typography>
+                <br></br>
+                <Typography variant='body2' className='inline-block'>Swipe the grid&apos;s tiles (up, down, left, or right) to merge matching numbers. When two tiles with the same value collide, they combine. Aim for a tile with a value of 2048 while planning strategic moves.</Typography>
+            </div>
+        </div>
+    )
+
+}
+
+function Game2048Controls() {
+    return (
+        <div className='game2048-section'>
+            <div className='game2048-instructions'>
+                <Typography variant='h6'>Keyboard Controls</Typography>
+                <br></br>
+                <div className='arrow-instruction'>
+                    <img src={UpArrow} className='arrow'></img> &nbsp; &nbsp; 
+                    <Typography variant='body2' className='inline-block'>Slide blocks up</Typography>
+                </div>
+                <div className='arrow-instruction'>
+                    <img src={LeftArrow} className='arrow'></img> &nbsp; &nbsp; 
+                    <Typography variant='body2' className='inline-block'>Slide blocks left</Typography>
+                </div>
+                <div className='arrow-instruction'>
+                    <img src={RightArrow} className='arrow'></img> &nbsp; &nbsp; 
+                    <Typography variant='body2' className='inline-block'>Slide blocks right</Typography>
+                </div>
+                <div className='arrow-instruction'>
+                    <img src={DownArrow} className='arrow'></img> &nbsp; &nbsp; 
+                    <Typography variant='body2' className='inline-block'>Slide blocks down</Typography>
+                </div>
+            </div>
+        </div>
+    )
 }
 
 function Cell(props) {
