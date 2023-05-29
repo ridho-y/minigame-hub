@@ -8,7 +8,6 @@ import TetrisLogo from '../assets/tetris.png'
 import Logo2048 from '../assets/2048.png'
 
 function Home() {
-
     return (
         <GridContainerUp>
             <Typography variant='h4'>Welcome to PlayOz</Typography>

@@ -1,6 +1,8 @@
 const ROW_LENGTH = 4;
 const COL_LENGTH = 4;
 
+let total = 0
+
 function getRandomInt(max) {
     return Math.floor(Math.random() * Math.ceil(max));
 }
@@ -24,6 +26,7 @@ export function moveDown(grid) {
     grid = joinDown(grid);
     grid = shift('down', grid);
     grid = spawnRandom(grid);
+    
     return grid;
 }
 
@@ -43,7 +46,7 @@ export function moveLeft(grid) {
     return grid;
 }
 
-function spawnRandom(grid) {
+export function spawnRandom(grid) {
     // Select a position where grid value is 0
     let x = getRandomInt(4);
     let y = getRandomInt(4);
@@ -56,6 +59,15 @@ function spawnRandom(grid) {
     newGrid[x][y] = [2,4][getRandomInt(2)];
     return newGrid;
 }
+
+export function getScore() {
+    return total
+}
+
+export function setScore2(s) {
+    total = s
+}
+
 
 const shift = (direction, grid) => {
     if (direction === 'up' || direction === 'down') {
@@ -109,6 +121,7 @@ const joinUp = (grid) => {
         while (end < grid.length) {
             if (grid[start][col] === grid[end][col]) {
                 grid[start][col] *= 2;
+                total += grid[start][col]
                 grid[end][col] = 0;
             }
             start++;
@@ -125,6 +138,7 @@ const joinDown = (grid) => {
         while (end >= 0) {
             if (grid[start][col] === grid[end][col]) {
                 grid[start][col] *= 2;
+                total += grid[start][col]
                 grid[end][col] = 0;
             }
             start--;
@@ -141,6 +155,7 @@ const joinRight = (grid) => {
         while (end < grid.length) {
             if (grid[row][start] === grid[row][end]) {
                 grid[row][start] *= 2;
+                total += grid[row][start]
                 grid[row][end] = 0;
             }
             start++;
@@ -157,6 +172,7 @@ const joinLeft = (grid) => {
         while (end >= 0) {
             if (grid[row][start] === grid[row][end]) {
                 grid[row][start] *= 2;
+                total += grid[row][start]
                 grid[row][end] = 0;
             }
             start--;

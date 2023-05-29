@@ -15,7 +15,7 @@ import { useTheme } from '@emotion/react'
 
 function Tetris () {
 
-    if (localStorage.getItem('playoz-tetris-highest-score') === undefined) {
+    if (localStorage.getItem('playoz-tetris-highest-score') === null) {
         localStorage.setItem('playoz-tetris-highest-score', '0')
     }
 
