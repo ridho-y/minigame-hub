@@ -1,0 +1,108 @@
+/* 2048 Game */
+:root {
+    --tile-size: 90px;
+    --gap: 10px;
+    --tile-font-size: 30px;
+}
+
+.background-2048 {
+    background-color: rgb(250,248,239)
+}
+
+#board {
+    display: inline-grid;
+    grid-template-columns: auto auto auto auto;
+    grid-template-rows: auto auto auto auto;
+    column-gap: var(--gap);
+    row-gap: var(--gap);
+    background-color: rgb(188,172,159);
+    border-radius: 5px;
+    position: relative;
+    width: calc(var(--gap) * 5 + var(--tile-size) * 4);
+    height: calc(var(--gap) * 5 + var(--tile-size) * 4);
+}
+  
+.cell {
+    position: absolute;
+    top: calc((var(--gap) + var(--tile-size)) * var(--y) + var(--gap));
+    left: calc((var(--gap) + var(--tile-size)) * var(--x) + var(--gap));;
+    height: var(--tile-size);
+    width: var(--tile-size);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 5px;
+    background-color: var(--darkBackground);
+    font-size: var(--tile-font-size);
+    font-weight: bold;
+    transition: 100ms ease-in-out;
+    animation: show 200ms ease-in-out;
+}
+
+@keyframes show {
+    0% {
+        opacity: .5;
+        transform: scale(0);
+    }
+}
+
+#game {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.invisible {
+    color: transparent;
+    background-color: rgb(204,193,180);
+}
+
+.num-2 {
+    background-color: #eee4da;
+}
+
+.num-4 {
+    background-color: #ede0c8;
+}
+
+.num-8 {
+    background-color: #f2b179;
+    color: white;
+}
+
+.num-16 {
+    background-color: #f59563;
+    color: white;
+}
+
+.num-32 {
+    background-color: #f67c5f;
+    color: white;
+}
+
+.num-64 {
+    background-color: #f65e3b;
+    color: white;
+}
+
+.num-128 {
+    background-color: #edcf72;
+    color: white;
+}
+
+.num-256 {
+    background-color: #edcc61;
+    color: white;
+}
+
+.num-512 {
+    background-color: #edc850;
+}
+
+.num-1024 {
+    background-color: #edc53f;
+}
+
+.num-2048 {
+    background-color: #edc22e;
+}

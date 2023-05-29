@@ -44,7 +44,6 @@ export function moveLeft(grid) {
 }
 
 function spawnRandom(grid) {
-
     // Select a position where grid value is 0
     let x = getRandomInt(4);
     let y = getRandomInt(4);
@@ -53,9 +52,9 @@ function spawnRandom(grid) {
         y = getRandomInt(4);
     }
     
-    // Replace that position with 2 or 4
-    grid[x][y] = [2,4][getRandomInt(2)];
-    return grid;
+    const newGrid = JSON.parse(JSON.stringify(grid))
+    newGrid[x][y] = [2,4][getRandomInt(2)];
+    return newGrid;
 }
 
 const shift = (direction, grid) => {
