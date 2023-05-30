@@ -57,7 +57,7 @@ function Game2048 () {
 
         for (let i = 0; i < board.length; i++) {
             for (let j = 0; j < board[i].length; j++) {
-                if (board[i][j] === 32) {
+                if (board[i][j] === 2048) {
                     setIsExploding(true)
                     setTimeout(() => {
                         alert('You got it!')
