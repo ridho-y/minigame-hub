@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react'
-
 import Aimg1 from '../data/modern-family-1/1.jpg';
 import Aimg2 from '../data/modern-family-1/2.jpg';
 import Aimg3 from '../data/modern-family-1/3.jpg';
@@ -34,10 +33,12 @@ import Dimg7 from '../data/modern-family-4/7.jpg';
 import Dimg8 from '../data/modern-family-4/8.jpg';
 import GridContainer from '../helpers/GridContainer';
 import { Button, Typography } from '@mui/material';
+import ConfettiExplosionLarge from '../helpers/ConfettiExplosionLarge.jsx';
 
 function Slido() {
 
     // create a state of all tiles []
+    const [isExploding, setIsExploding] = useState(false);
     const [tiles, setTiles] = useState([])
     const gameImageOptions = [
         [null, Aimg1, Aimg2, Aimg3, Aimg4, Aimg5, Aimg6, Aimg7, Aimg8],
@@ -71,8 +72,8 @@ function Slido() {
     useEffect(() => {
         if ((JSON.stringify(tiles) === JSON.stringify(answer)) && tiles.length > 0) {
             setTimeout(() => {
-                alert('You got it!');
-                initGame();
+                setIsExploding(true)
+                setTimeout(() => setIsExploding(false), 2000)
             }, 100)
         }
     }, [tiles])
@@ -84,6 +85,7 @@ function Slido() {
     return (
         <>
             <GridContainer className='slido-background'>
+                {isExploding && <ConfettiExplosionLarge />}
                 <Typography variant='body1' style={{ backgroundColor: 'white', borderRadius: '5px', padding: '0 10px' }}>Click a tile to move it into the empty position</Typography>
                 <div className='grid'>
                     <div className='grid-row'>{tiles.slice(0,3).map((t, i) => <Tile key={i} img={t} pos={i} tiles={tiles} setTiles={setTiles}/>)}</div>

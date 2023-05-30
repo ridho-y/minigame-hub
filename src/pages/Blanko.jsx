@@ -2,9 +2,12 @@ import React, { useEffect, useState } from 'react';
 import { strs } from '../data/blanko.js'
 import GridContainer from '../helpers/GridContainer.jsx';
 import { Box, Button, Input, Typography } from '@mui/material';
+import ConfettiExplosionLarge from '../helpers/ConfettiExplosionLarge.jsx';
+
 
 function Blanko() {
 
+    const [isExploding, setIsExploding] = useState(false);
     const [word, setWord] = useState('');
     const [blankIdxs, setBlankIdxs] = useState([]);
     const [currWord, setCurrWord] = useState([]);
@@ -36,11 +39,10 @@ function Blanko() {
 
     useEffect(() => {
         if (currWord.length > 0 && currWord.join('') === word) {
-            setTimeout(() => {
-                alert('You got it!')
-                setCurrWord([]);
-                setReset(reset => !reset)
-            }, 100)
+            setIsExploding(true)
+            setCurrWord([]);
+            setReset(reset => !reset)
+            setTimeout(() => setIsExploding(false), 2000)
         }
     }, [currWord, word])
 
@@ -56,6 +58,8 @@ function Blanko() {
 
     return (
         <GridContainer className='blanko-background'>
+            {isExploding && <ConfettiExplosionLarge />}
+
             <div className='blanko-box'>
                 <Typography variant='body1'>Guess the Aussie slang!</Typography>
                 <br></br>

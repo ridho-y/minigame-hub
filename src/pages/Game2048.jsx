@@ -7,10 +7,12 @@ import UpArrow from '../assets/up-arrow.svg'
 import DownArrow from '../assets/down-arrow.svg'
 import LeftArrow from '../assets/left-arrow.svg'
 import RightArrow from '../assets/right-arrow.svg'
+import ConfettiExplosionLarge from '../helpers/ConfettiExplosionLarge.jsx';
 
 function Game2048 () {
     
     const initialBoard = [[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0]];
+    const [isExploding, setIsExploding] = useState(false);
     const [board, setBoard] = useState(startBoard([...initialBoard]))
     const [score, setScore] = useState(0)
 
@@ -55,11 +57,14 @@ function Game2048 () {
 
         for (let i = 0; i < board.length; i++) {
             for (let j = 0; j < board[i].length; j++) {
-                if (board[i][j] === 2048) {
+                if (board[i][j] === 32) {
+                    setIsExploding(true)
                     setTimeout(() => {
-                        alert('You win! 2048!')
+                        alert('You got it!')
                         setBoard(startBoard([...initialBoard]))
                     }, 100)
+                    setTimeout(() => setIsExploding(false), 2000)
+
                 }
             }
         }
@@ -122,6 +127,7 @@ function Game2048 () {
     if (isMobile) {
         return (
             <GridContainer className='background-2048'>
+                {isExploding && <ConfettiExplosionLarge />}
                 <div className='game2048'> 
                     <Game2048Board board={board} score={score} setBoard={setBoard} moveUp={moveUp} moveDown={moveDown} moveRight={moveRight} moveLeft={moveLeft}/>
                     <Game2048Instructions />
@@ -133,6 +139,7 @@ function Game2048 () {
     } else {
         return (
             <GridContainer className='background-2048'>
+                {isExploding && <ConfettiExplosionLarge />}
                 <div className='game2048'> 
                     <Game2048Instructions />
                     <Game2048Board board={board} score={score} setBoard={setBoard} moveUp={moveUp} moveDown={moveDown} moveRight={moveRight} moveLeft={moveLeft}/>
