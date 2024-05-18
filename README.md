@@ -10,8 +10,8 @@ PlayOz was developed with Create React App and uses Yarn.
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/yourusername/PlayOz.git
-   cd PlayOz
+   git clone git@github.com:ridho-y/playoz.git
+   cd playoz
    ```
 
 2. Install dependencies:
